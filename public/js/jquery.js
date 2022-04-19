@@ -153,7 +153,7 @@ jQuery(document).scroll(function(){
 
 function DownloadFile(fileName) {
             //Set the File URL.
-            var url = fileName;
+            var url = "Files/" + fileName;
  
             //Create XMLHTTP Request.
             var req = new XMLHttpRequest();
