@@ -63,7 +63,6 @@ var win = jQuery(window);
 
 var allMods = jQuery(".module");
 
-console.log("bbbb");
 allMods.each(function(i, el) {
   var el = jQuery(el);
   if (el.visible(true)) {
@@ -119,4 +118,93 @@ jQuery(document).ready(function(){
             
         });
     });
+  var flag = false;
+jQuery(document).scroll(function(){ 
+ if(jQuery('.stat.work').visible(true)&& flag==false){
+  flag=true;
+      jQuery('.counting').each(function() {
+  var $this = jQuery(this),
+      countTo = $this.attr('data-count');
+  
+  jQuery({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
 
+  {
+
+    duration: 1500,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+  
+
+});
+
+    }
+
+});
+
+function DownloadFile(fileName) {
+            //Set the File URL.
+            var url = fileName;
+ 
+            //Create XMLHTTP Request.
+            var req = new XMLHttpRequest();
+            req.open("GET", url, true);
+            req.responseType = "blob";
+            req.onload = function () {
+                //Convert the Byte Data to BLOB object.
+                var blob = new Blob([req.response], { type: "application/octetstream" });
+ 
+                //Check the Browser type and download the File.
+                var isIE = false || !!document.documentMode;
+                if (isIE) {
+                    window.navigator.msSaveBlob(blob, fileName);
+                } else {
+                    var url = window.URL || window.webkitURL;
+                    link = url.createObjectURL(blob);
+                    var a = document.createElement("a");
+                    a.setAttribute("download", fileName);
+                    a.setAttribute("href", link);
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            };
+            req.send();
+        };
+
+// number count for stats, using jQuery animate
+/*
+jQuery('.counting').each(function() {
+  var $this = jQuery(this),
+      countTo = $this.attr('data-count');
+  
+  jQuery({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 3000,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+  
+
+});
+*/
